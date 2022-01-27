@@ -9,6 +9,7 @@
 
     // react
     "react/react-in-jsx-scope": ["off"],
+    "react/prop-types": ["off"],
     "react/self-closing-comp": ["warn"],
     "react/function-component-definition": [
       "warn",

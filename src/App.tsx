@@ -1,7 +1,13 @@
+import Toolbar from './components/toolbar';
+
 const App = () => {
   return (
-    <div className="App">
-      <header className="App-header" />
+    <div className="min-h-screen">
+      <Toolbar
+        onChangeCollapse={() => {}}
+        onChangeInfo={() => {}}
+        onChangeVisibility={() => {}}
+      />
     </div>
   );
 };
