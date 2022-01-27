@@ -2,6 +2,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import classNames from 'classnames';
 import React, { useContext, useState } from 'react';
+import ReactModal from 'react-modal';
 import type { LegendType } from '../../lib/data';
 import { SortableListenersContext } from '../sortable';
 import Toolbar from '../toolbar';
@@ -29,6 +30,7 @@ const Legend: React.FC<LegendProps> = ({ legend }) => {
   if (!LegendComponent) return null;
 
   const dragContext = useContext(SortableListenersContext);
+  const [showDescription, setShowDescription] = useState(false);
 
   return (
     <div className="text-gray-700 relative">
@@ -44,10 +46,28 @@ const Legend: React.FC<LegendProps> = ({ legend }) => {
         title={legend.name}
         actions={{
           onChangeCollapse: setVisible,
-          onChangeInfo: () => {},
+          onChangeInfo: () => {
+            setShowDescription(true);
+          },
           onChangeVisibility: () => {},
         }}
       />
+      <ReactModal
+        isOpen={showDescription}
+        onRequestClose={() => {
+          setShowDescription(false);
+        }}
+      >
+        <div
+          className="cursor-pointer text-righ w-min ml-auto text-xl"
+          onClick={() => {
+            setShowDescription(false);
+          }}
+        >
+          &times;
+        </div>
+        <div dangerouslySetInnerHTML={{ __html: legend.description }} />
+      </ReactModal>
       <div
         //   className={classNames('transition-all duration-1000', {
         //     'opacity-0 -bottom-full absolute': !visible,

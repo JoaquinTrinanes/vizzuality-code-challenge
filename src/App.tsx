@@ -1,5 +1,3 @@
-import { DndContext } from '@dnd-kit/core';
-import { arrayMove, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { useEffect, useState } from 'react';
 import Legend from './components/legend';
 import Sortable, { SortableItem } from './components/sortable';
@@ -20,7 +18,7 @@ const App = () => {
     <div className="min-h-screen bg-gray-800">
       <div className="divide-y w-2/3 mx-auto flex flex-col gap-y-10 bg-white p-10">
         <Sortable
-          onChange={(values) => {
+          onChangeOrder={(values) => {
             setData((oldData) =>
               oldData
                 .slice()
@@ -28,7 +26,6 @@ const App = () => {
             );
           }}
           items={data.map((legend) => legend.id)}
-          strategy={verticalListSortingStrategy}
         >
           {data.map((legend) => (
             <SortableItem key={legend.id} id={legend.id}>

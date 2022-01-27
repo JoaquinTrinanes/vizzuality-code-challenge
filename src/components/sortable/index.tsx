@@ -1,5 +1,6 @@
 import { DndContext } from '@dnd-kit/core';
 import type { SortableContextProps } from '@dnd-kit/sortable';
+import { verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { useSortable } from '@dnd-kit/sortable';
 import { arrayMove } from '@dnd-kit/sortable';
 import { SortableContext } from '@dnd-kit/sortable';
@@ -10,7 +11,7 @@ import { CSS } from '@dnd-kit/utilities';
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
 
 interface SortableProps extends SortableContextProps {
-  onChange: (orderedIds: string[]) => void;
+  onChangeOrder: (orderedIds: string[]) => void;
 }
 
 interface SortableListenersContextProps {
@@ -23,7 +24,7 @@ export const SortableListenersContext =
   React.createContext<SortableListenersContextProps | null>(null);
 
 const Sortable: React.FC<SortableProps> = ({
-  onChange,
+  onChangeOrder,
   children,
   items,
   ...props
@@ -39,10 +40,14 @@ const Sortable: React.FC<SortableProps> = ({
         const newIndex = items.indexOf(over.id);
 
         const ordered = arrayMove(items, oldIndex, newIndex);
-        onChange(ordered as string[]);
+        onChangeOrder(ordered as string[]);
       }}
     >
-      <SortableContext items={items} {...props}>
+      <SortableContext
+        strategy={verticalListSortingStrategy}
+        items={items}
+        {...props}
+      >
         {children}
       </SortableContext>
     </DndContext>
