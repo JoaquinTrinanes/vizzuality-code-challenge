@@ -66,7 +66,10 @@ const Legend: React.FC<LegendProps> = ({ legend }) => {
         >
           &times;
         </div>
-        <div dangerouslySetInnerHTML={{ __html: legend.description }} />
+        <div
+          className="prose"
+          dangerouslySetInnerHTML={{ __html: legend.description }}
+        />
       </ReactModal>
       <div
         //   className={classNames('transition-all duration-1000', {
