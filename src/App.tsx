@@ -2,7 +2,7 @@ import { DndContext } from '@dnd-kit/core';
 import { arrayMove, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { useEffect, useState } from 'react';
 import Legend from './components/legend';
-import Sortable from './components/sortable';
+import Sortable, { SortableItem } from './components/sortable';
 import type { LegendType } from './lib/data';
 import fetchData from './lib/data';
 
@@ -31,7 +31,9 @@ const App = () => {
           strategy={verticalListSortingStrategy}
         >
           {data.map((legend) => (
-            <Legend key={legend.id} legend={legend} />
+            <SortableItem key={legend.id} id={legend.id}>
+              <Legend legend={legend} />
+            </SortableItem>
           ))}
         </Sortable>
       </div>

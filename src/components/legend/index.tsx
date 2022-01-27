@@ -1,8 +1,9 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import type { LegendType } from '../../lib/data';
+import { SortableListenersContext } from '../sortable';
 import Toolbar from '../toolbar';
 import BasicLegend from './legendTypes/basic';
 import ChoroplethLegend from './legendTypes/choropleth';
@@ -23,22 +24,22 @@ const legendByTypes: Record<string, React.FC<LegendType>> = {
 const Legend: React.FC<LegendProps> = ({ legend }) => {
   const [visible, setVisible] = useState(true);
 
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: legend.id });
-
-  const style = { transform: CSS.Translate.toString(transform), transition };
-
   const LegendComponent = legendByTypes[legend.type];
 
   if (!LegendComponent) return null;
 
+  const dragContext = useContext(SortableListenersContext);
+
   return (
-    <div
-      className="text-gray-700"
-      ref={setNodeRef}
-      style={style}
-      {...attributes}
-    >
+    <div className="text-gray-700 relative">
+      <div
+        className={classNames(
+          'absolute w-full h-full top-0 left-0 opacity-50 bg-gray-50',
+          {
+            hidden: !dragContext?.isDragging,
+          }
+        )}
+      />
       <Toolbar
         title={legend.name}
         actions={{
@@ -46,7 +47,6 @@ const Legend: React.FC<LegendProps> = ({ legend }) => {
           onChangeInfo: () => {},
           onChangeVisibility: () => {},
         }}
-        dragListeners={listeners}
       />
       <div
         //   className={classNames('transition-all duration-1000', {
