@@ -1,6 +1,6 @@
 import type { LegendType } from '../../../lib/data';
 
-const ChoroplethLegend: React.FC<Pick<LegendType, 'items'>> = ({ items }) => {
+const ChoroplethLegend: React.FC<LegendType> = ({ items }) => {
   return (
     <div className="flex flex-row">
       {items.map(({ color, name }, i) => (

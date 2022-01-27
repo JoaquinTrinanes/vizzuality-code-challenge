@@ -11,10 +11,12 @@ const App = () => {
   }, []);
 
   return (
-    <div className="min-h-screen divide-y w-2/3 max-w-lg mx-auto space-y-10">
-      {data?.map((legend) => (
-        <Legend key={legend.id} legend={legend} />
-      ))}
+    <div className="min-h-screen bg-gray-800">
+      <div className="divide-y w-2/3 mx-auto flex flex-col gap-y-10 bg-white p-10">
+        {data?.map((legend) => (
+          <Legend key={legend.id} legend={legend} />
+        ))}
+      </div>
     </div>
   );
 };

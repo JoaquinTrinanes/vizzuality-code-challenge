@@ -1,13 +1,17 @@
 import type { LegendType } from '../../../lib/data';
 
-const GradientLegend: React.FC<Pick<LegendType, 'items'>> = ({ items }) => {
+const GradientLegend: React.FC<LegendType> = ({ items }) => {
   return (
     <div className="flex flex-row relative">
       {items.map(({ color, name }, i) => {
         const nextColor = items[i + 1]?.color;
 
         if (!nextColor && name) {
-          return <div className="absolute right-0 top-2">{name}</div>;
+          return (
+            <div key={i} className="absolute right-0 top-2">
+              {name}
+            </div>
+          );
         } else if (!nextColor) return null;
 
         return (

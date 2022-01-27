@@ -1,22 +1,21 @@
 import classNames from 'classnames';
 import React, { useState } from 'react';
-import type { LegendType } from '../../lib/data';
+import type { LegendType, TimelineLegendType } from '../../lib/data';
 import Toolbar from '../toolbar';
 import BasicLegend from './legendTypes/basic';
 import ChoroplethLegend from './legendTypes/choropleth';
 import GradientLegend from './legendTypes/gradient';
+import TimelineLegend from './legendTypes/timeline';
 
 interface LegendProps {
   legend: LegendType;
 }
 
-const legendByTypes: Record<
-  LegendType['type'],
-  React.FC<Pick<LegendType, 'items'>>
-> = {
+const legendByTypes: Record<string, React.FC<LegendType>> = {
   basic: BasicLegend,
   choropleth: ChoroplethLegend,
   gradient: GradientLegend,
+  timeline: TimelineLegend as React.FC<LegendType>,
 };
 
 const Legend: React.FC<LegendProps> = ({ legend }) => {
@@ -42,7 +41,7 @@ const Legend: React.FC<LegendProps> = ({ legend }) => {
         //   })}
         className={classNames('text-xs mt-3 ml-5', { hidden: !visible })}
       >
-        <LegendComponent items={legend.items} />
+        <LegendComponent {...legend} />
       </div>
     </div>
   );
