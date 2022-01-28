@@ -16,7 +16,6 @@ import type { HTMLAttributes } from 'react';
 import React from 'react';
 import { CSS } from '@dnd-kit/utilities';
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
-import { useSensorSetup } from '@dnd-kit/core/dist/hooks/utilities';
 
 interface SortableProps extends SortableContextProps {
   onChangeOrder: (orderedIds: string[]) => void;

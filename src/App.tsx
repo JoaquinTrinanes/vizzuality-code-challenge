@@ -30,7 +30,7 @@ const App = () => {
           <Spinner />
         </div>
       ) : (
-        <div className="divide-y md:w-1/2 mx-auto flex flex-col gap-y-5 bg-white p-10">
+        <div className="divide-y md:w-1/2 scale-75 mx-auto flex flex-col gap-y-5 bg-white p-10">
           <Sortable
             onChangeOrder={(values) => {
               setData((oldData) => {
