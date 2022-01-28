@@ -16,6 +16,7 @@
     "@types/react-dom": "^17.0.9",
     "add": "^2.0.6",
     "classnames": "^2.3.1",
+    "dompurify": "^2.3.5",
     "luxon": "^2.3.0",
     "rc-slider": "^9.7.5",
     "rc-tooltip": "^5.1.1",
@@ -53,6 +54,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.0",
+    "@types/dompurify": "^2.3.3",
     "@types/luxon": "^2.0.9",
     "@types/react-modal": "^3.13.1",
     "@typescript-eslint/eslint-plugin": "^5.10.1",

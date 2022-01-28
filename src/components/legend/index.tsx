@@ -1,5 +1,3 @@
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
 import classNames from 'classnames';
 import React, { useContext, useState } from 'react';
 import ReactModal from 'react-modal';
@@ -10,6 +8,7 @@ import BasicLegend from './legendTypes/basic';
 import ChoroplethLegend from './legendTypes/choropleth';
 import GradientLegend from './legendTypes/gradient';
 import TimelineLegend from './legendTypes/timeline';
+import DOMPurify from 'dompurify';
 
 interface LegendProps {
   legend: LegendType;
@@ -68,7 +67,11 @@ const Legend: React.FC<LegendProps> = ({ legend }) => {
         </div>
         <div
           className="prose"
-          dangerouslySetInnerHTML={{ __html: legend.description }}
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(legend.description, {
+              USE_PROFILES: { html: true },
+            }),
+          }}
         />
       </ReactModal>
       <div
