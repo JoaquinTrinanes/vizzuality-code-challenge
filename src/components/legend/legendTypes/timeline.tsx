@@ -1,9 +1,12 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { TimelineLegendType } from '../../../lib/data';
 import RangeSlider from '../../rangeSlider';
 import { DateTime } from 'luxon';
 
-const TimelineLegend: React.FC<TimelineLegendType> = ({ timeline }) => {
+const TimelineLegend: React.FC<TimelineLegendType> = ({
+  timeline,
+  onChangeDate,
+}) => {
   const minDate = useMemo(
     () => DateTime.fromISO(timeline.minDate),
     [timeline.minDate]
@@ -18,8 +21,19 @@ const TimelineLegend: React.FC<TimelineLegendType> = ({ timeline }) => {
     [timeline.dateFormat]
   );
 
-  const [currentMinDate, setCurrentMinDate] = useState<DateTime>(minDate);
-  const [currentMaxDate, setCurrentMaxDate] = useState<DateTime>(maxDate);
+  const [currentMinDate, setCurrentMinDate] = useState<number>(() =>
+    minDate.toMillis()
+  );
+  const [currentMaxDate, setCurrentMaxDate] = useState<number>(
+    maxDate.toMillis()
+  );
+
+  useEffect(() => {
+    onChangeDate?.([
+      DateTime.fromMillis(currentMinDate).toJSDate(),
+      DateTime.fromMillis(currentMaxDate).toJSDate(),
+    ]);
+  }, [currentMinDate, currentMaxDate]);
 
   const millisecondsPerYear = 3.154e10;
 
@@ -30,10 +44,10 @@ const TimelineLegend: React.FC<TimelineLegendType> = ({ timeline }) => {
         formatValue={(value) => formatDate(DateTime.fromMillis(value))}
         step={timeline.step * millisecondsPerYear}
         range={[minDate.toMillis(), maxDate.toMillis()]}
-        value={[currentMinDate.toMillis(), currentMaxDate.toMillis()]}
+        value={[currentMinDate, currentMaxDate]}
         onChange={([min, max]) => {
-          setCurrentMinDate(DateTime.fromMillis(min));
-          setCurrentMaxDate(DateTime.fromMillis(max));
+          setCurrentMinDate(min);
+          setCurrentMaxDate(max);
         }}
       />
       <div className="absolute -bottom-4 -right-2">{formatDate(maxDate)}</div>

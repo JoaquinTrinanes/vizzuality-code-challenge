@@ -48,7 +48,9 @@ const Legend: React.FC<LegendProps> = ({ legend }) => {
           onChangeInfo: () => {
             setShowDescription(true);
           },
-          onChangeVisibility: () => {},
+          onChangeVisibility: () => {
+            // we don't have a real map :)
+          },
         }}
       />
       <ReactModal

@@ -19,6 +19,7 @@ export type TimelineLegendType = BasicLegendType & {
     maxDate: string;
     minDate: string;
   };
+  onChangeDate?: (values: [Date, Date]) => void;
 };
 
 type OtherLegendType = BasicLegendType & {
