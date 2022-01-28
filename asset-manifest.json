@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/vizzuality-code-challenge/static/css/main.bc696444.css",
-    "main.js": "/vizzuality-code-challenge/static/js/main.8e01afb5.js",
+    "main.css": "/vizzuality-code-challenge/static/css/main.ca63cec0.css",
+    "main.js": "/vizzuality-code-challenge/static/js/main.3ac7b13a.js",
     "static/js/787.6bc26acf.chunk.js": "/vizzuality-code-challenge/static/js/787.6bc26acf.chunk.js",
     "index.html": "/vizzuality-code-challenge/index.html",
     "static/media/show.svg": "/vizzuality-code-challenge/static/media/show.222b00765b83495143bc5e9f0255f9a9.svg",
@@ -9,12 +9,12 @@
     "static/media/hide.svg": "/vizzuality-code-challenge/static/media/hide.92e63deef951c170b1433f22a2ea2c44.svg",
     "static/media/info.svg": "/vizzuality-code-challenge/static/media/info.c491fdbc226bd8819bd0aa6fa0b39b5d.svg",
     "static/media/arrow-down.svg": "/vizzuality-code-challenge/static/media/arrow-down.f52426b7264f269571c394e5ca8ae614.svg",
-    "main.bc696444.css.map": "/vizzuality-code-challenge/static/css/main.bc696444.css.map",
-    "main.8e01afb5.js.map": "/vizzuality-code-challenge/static/js/main.8e01afb5.js.map",
+    "main.ca63cec0.css.map": "/vizzuality-code-challenge/static/css/main.ca63cec0.css.map",
+    "main.3ac7b13a.js.map": "/vizzuality-code-challenge/static/js/main.3ac7b13a.js.map",
     "787.6bc26acf.chunk.js.map": "/vizzuality-code-challenge/static/js/787.6bc26acf.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.bc696444.css",
-    "static/js/main.8e01afb5.js"
+    "static/css/main.ca63cec0.css",
+    "static/js/main.3ac7b13a.js"
   ]
 }
