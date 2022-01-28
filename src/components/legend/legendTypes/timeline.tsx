@@ -50,8 +50,8 @@ const TimelineLegend: React.FC<TimelineLegendType> = ({
         }}
       />
       <div className="flex flex-row justify-between">
-        <div className="-translate-x-5">{formatDate(maxDate)}</div>
-        <div className="translate-x-5">{formatDate(minDate)}</div>
+        <div className="-translate-x-5">{formatDate(minDate)}</div>
+        <div className="translate-x-5">{formatDate(maxDate)}</div>
       </div>
     </div>
   );
