@@ -60,7 +60,7 @@ const Legend: React.FC<LegendProps> = ({ legend }) => {
         }}
       >
         <div
-          className="cursor-pointer text-righ w-min ml-auto text-xl"
+          className="cursor-pointer text-righ w-min ml-auto text-xl sticky top-0 right-0"
           onClick={() => {
             setShowDescription(false);
           }}
@@ -68,7 +68,7 @@ const Legend: React.FC<LegendProps> = ({ legend }) => {
           &times;
         </div>
         <div
-          className="prose"
+          className="prose mx-auto"
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(legend.description, {
               USE_PROFILES: { html: true },
@@ -77,10 +77,10 @@ const Legend: React.FC<LegendProps> = ({ legend }) => {
         />
       </ReactModal>
       <div
-        //   className={classNames('transition-all duration-1000', {
-        //     'opacity-0 -bottom-full absolute': !visible,
-        //   })}
-        className={classNames('text-xs mt-3 ml-5', { hidden: !visible })}
+        className={classNames('text-xs mt-3 ml-5  transition-all', {
+          '-translate-y-5 opacity-0 absolute w-full duration-2000 pointer-events-none':
+            !visible,
+        })}
       >
         <LegendComponent {...legend} />
       </div>
