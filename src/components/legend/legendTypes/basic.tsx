@@ -6,7 +6,7 @@ const BasicLegend: React.FC<LegendType> = ({ items }) => {
       {items.map(({ color, name }, i) => (
         <div key={i} className="flex flex-row gap-x-2">
           <div
-            className="w-4 h-4 rounded-full"
+            className="w-4 h-4 rounded-full my-auto"
             style={{ backgroundColor: color }}
           />
           <div>{name}</div>
