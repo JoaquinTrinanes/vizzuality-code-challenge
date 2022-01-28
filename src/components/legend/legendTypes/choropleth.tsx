@@ -6,7 +6,7 @@ const ChoroplethLegend: React.FC<LegendType> = ({ items }) => {
       {items.map(({ color, name }, i) => (
         <div key={i} className="w-full">
           <div className="h-2" style={{ backgroundColor: color }} />
-          <div className="text-center">{name}</div>
+          <div className="text-center text-sm md:text-2xl">{name}</div>
         </div>
       ))}
     </div>
