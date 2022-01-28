@@ -85,8 +85,12 @@ const Legend: React.FC<LegendProps> = ({ legend }) => {
         <LegendComponent {...legend} />
         {legend.excerpt && (
           <div
-            className="prose mt-10 prose-a:text-blue-700"
-            dangerouslySetInnerHTML={{ __html: legend.excerpt }}
+            className="prose prose-slate prose-a:text-blue-700 mt-10"
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(legend.excerpt, {
+                USE_PROFILES: { html: true },
+              }),
+            }}
           />
         )}
       </div>
