@@ -1,4 +1,11 @@
-import { closestCenter, DndContext } from '@dnd-kit/core';
+import {
+  closestCenter,
+  DndContext,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
 import type { SortableContextProps } from '@dnd-kit/sortable';
 import { verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { useSortable } from '@dnd-kit/sortable';
@@ -9,6 +16,7 @@ import type { HTMLAttributes } from 'react';
 import React from 'react';
 import { CSS } from '@dnd-kit/utilities';
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
+import { useSensorSetup } from '@dnd-kit/core/dist/hooks/utilities';
 
 interface SortableProps extends SortableContextProps {
   onChangeOrder: (orderedIds: string[]) => void;
@@ -29,8 +37,14 @@ const Sortable: React.FC<SortableProps> = ({
   items,
   ...props
 }) => {
+  const touchSensor = useSensor(TouchSensor);
+  const mouseSensor = useSensor(MouseSensor);
+
+  const sensors = useSensors(touchSensor, mouseSensor);
+
   return (
     <DndContext
+      sensors={sensors}
       collisionDetection={closestCenter}
       modifiers={[restrictToVerticalAxis]}
       onDragEnd={({ active, over }) => {
