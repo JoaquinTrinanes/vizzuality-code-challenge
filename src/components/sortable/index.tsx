@@ -1,4 +1,4 @@
-import { DndContext } from '@dnd-kit/core';
+import { closestCenter, DndContext } from '@dnd-kit/core';
 import type { SortableContextProps } from '@dnd-kit/sortable';
 import { verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { useSortable } from '@dnd-kit/sortable';
@@ -31,6 +31,7 @@ const Sortable: React.FC<SortableProps> = ({
 }) => {
   return (
     <DndContext
+      collisionDetection={closestCenter}
       modifiers={[restrictToVerticalAxis]}
       onDragEnd={({ active, over }) => {
         if (!over || active.id === over.id) {
