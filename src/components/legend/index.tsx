@@ -77,12 +77,18 @@ const Legend: React.FC<LegendProps> = ({ legend }) => {
         />
       </ReactModal>
       <div
-        className={classNames('text-xs mt-3 ml-5  transition-all', {
+        className={classNames('mt-3 ml-5 transition-all', {
           '-translate-y-5 opacity-0 absolute w-full duration-2000 pointer-events-none':
             !visible,
         })}
       >
         <LegendComponent {...legend} />
+        {legend.excerpt && (
+          <div
+            className="prose mt-10 prose-a:text-blue-700"
+            dangerouslySetInnerHTML={{ __html: legend.excerpt }}
+          />
+        )}
       </div>
     </div>
   );

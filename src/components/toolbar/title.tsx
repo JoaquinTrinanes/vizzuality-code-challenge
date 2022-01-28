@@ -12,7 +12,7 @@ const ToolbarTitle: React.FC<ToolbarTitleProps> = ({ title }) => {
   return (
     <div className="flex flex-row gap-x-2 align-middle">
       <div
-        className="w-2 cursor-grab translate-y-[5px]"
+        className="w-3 cursor-grab translate-y-2"
         {...sortableContext?.listeners}
         {...sortableContext?.attributes}
       >

@@ -33,7 +33,7 @@ const ToolbarElement: React.FC<ToolbarElementProps> = ({
   return (
     <Tooltip content={tooltipContent}>
       <div
-        className={classNames('w-3', className)}
+        className={classNames('w-5', className)}
         onClick={onAction}
         {...props}
       >

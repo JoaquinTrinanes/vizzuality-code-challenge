@@ -38,8 +38,7 @@ const TimelineLegend: React.FC<TimelineLegendType> = ({
   const millisecondsPerYear = 3.154e10;
 
   return (
-    <div className="relative">
-      <div className="absolute -bottom-4 -left-2">{formatDate(minDate)}</div>
+    <div>
       <RangeSlider
         formatValue={(value) => formatDate(DateTime.fromMillis(value))}
         step={timeline.step * millisecondsPerYear}
@@ -50,7 +49,10 @@ const TimelineLegend: React.FC<TimelineLegendType> = ({
           setCurrentMaxDate(max);
         }}
       />
-      <div className="absolute -bottom-4 -right-2">{formatDate(maxDate)}</div>
+      <div className="flex flex-row justify-between">
+        <div className="-translate-x-5">{formatDate(maxDate)}</div>
+        <div className="translate-x-5">{formatDate(minDate)}</div>
+      </div>
     </div>
   );
 };
