@@ -58,9 +58,16 @@ const Legend: React.FC<LegendProps> = ({ legend }) => {
         onRequestClose={() => {
           setShowDescription(false);
         }}
+        style={{
+          content: {
+            width: '75%',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          },
+        }}
       >
         <div
-          className="cursor-pointer text-righ w-min ml-auto text-xl sticky top-0 right-0"
+          className="cursor-pointer text-righ w-min ml-auto text-xl sticky top-0 right-5"
           onClick={() => {
             setShowDescription(false);
           }}
