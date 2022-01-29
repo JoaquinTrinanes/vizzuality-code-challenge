@@ -63,17 +63,23 @@ const Legend: React.FC<LegendProps> = ({ legend }) => {
             width: '75%',
             marginLeft: 'auto',
             marginRight: 'auto',
+            height: '50%',
+            marginTop: 'auto',
+            marginBottom: 'auto',
           },
         }}
       >
-        <div
-          className="cursor-pointer text-righ w-min ml-auto text-xl sticky top-0 right-5"
-          onClick={() => {
-            setShowDescription(false);
-          }}
-        >
-          &times;
+        <div className="sticky top-0 w-full">
+          <div
+            className="cursor-pointer text-righ w-min ml-auto text-xl"
+            onClick={() => {
+              setShowDescription(false);
+            }}
+          >
+            &times;
+          </div>
         </div>
+
         <div
           className="prose mx-auto"
           dangerouslySetInnerHTML={{
