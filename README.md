@@ -42,11 +42,11 @@ To create the colored circle a `div` is created. It has the background color set
 
 ### Choropleth
 
-A `div` is created with `flex` display. each cell is full width and has a `div` with the desired color and the corresponding name.
+A `div` is created with `flex` display. Each cell is full width and has a `div` with the desired color and the corresponding name.
 
 ### Gradient
 
-Similar to the previous one, but instead of using a solid color a `linear-gradient` from the current color to the next is created. The last element is skipped.
+Similar to the previous one, but instead of using a solid color, a `linear-gradient` from the current color to the next is created. The last element is skipped.
 
 There's some extra code to specifically render the last value's name.
 
@@ -71,25 +71,25 @@ This is React's way of telling you that you shouldn't be doing this if you don't
 
 The `prose` class is a Tailwind utility (`@tailwindcss/typography`) that takes care of formatting the text for us.
 
-The modal is styled because it would be huge otherwise. The width is set to 75% and the height to 50%. Honestly, I wanted to make this part responsive, but I couldn't find a way to use classes (that is, Tailwind's built in support for responsive design) and I didn't want to use JS to get the screen size. I'm sure there's a way to do it tho. The current compromise is a width that looks good both on computer an mobile, but not as good as it possibly can.
+The modal is styled because it would be huge otherwise. The width is set to 75% and the height to 50%. Honestly, I wanted to make this part responsive, but I couldn't find a way to use classes (that is, Tailwind's built in support for responsive design) and I didn't want to use JS to get the screen size. I'm sure there's a way to do it though. The current compromise is a width that looks good both on computer and mobile, but not as good as it possibly can.
 
 The modal can be closed pressing escape or clicking outside it, but an **&times;** button is added to improve UX. It's sticky, so it's always visible, even if the modal is scrolled down.
 
 ## Tooltips
 
-I used a library called `rc-tooltip` and it's default styles to create them. It works as a component that normally renders it's `children`, but when the trigger condition is met (the desired combination of `click` and `hover`, only the latter in this case) is met, the `overlay` prop is rendered.
+I used a library called `rc-tooltip` and its default styles to create them. It works as a component that normally renders its `children`, but when the trigger condition is met (the desired combination of `click` and `hover`, only the latter in this case) is met, the `overlay` prop is rendered.
 
 ## Optional goals
 
 ### Little excerpt
 
-So the client wants to show some additional data along the legend? No problem! The easiest way to do that and be flexible in the future is for them to send that info with us alongside the other data. Thus, I created an optional `excerpt` property that each legend can provide. i'd use the name `description`, but that one was already taken. The excerpt is rendered the same way as the modal description. To emulate the data is received I hardcoded some text in the fetch function.
+So the client wants to show some additional data along the legend? No problem! The easiest way to do that and be flexible in the future is for them to send us that info alongside the other data. Thus, I created an optional `excerpt` property that each legend can provide. i'd use the name `description`, but that one was already taken. The excerpt is rendered the same way as the modal description. To simulate the data is received I hardcoded some text in the fetch function.
 
 ### Dragging stuff around
 
 The `@dnd-kit` library provides all the drag and drop functionality we will ever need (for now at least). It even provides a sortable utility in `@dnd-kit/sortable`, which we will use.
 
-A `Sortable` component is created. This component takes care of creating a `SortableContext` inside a `DndContext`. The `DndContext`handles the logic of what happens when a drag operation completes, how items collide, mouse and touch support... whereas the `SortableContext` keeps track of how the items are ordered.
+A `Sortable` component is created. This component takes care of creating a `SortableContext` inside a `DndContext`. The `DndContext`handles the logic of what happens when a drag operation is completed, how items collide, mouse and touch support... whereas the `SortableContext` keeps track of how the items are ordered.
 
 Each component inside `Sortable` must be enclosed in a `SortableItem` to work. This takes care of the dragging functionality and uses a `SortableListenersContext`. This allows us to make a whole element dragabble but select the handle in an easy way (in this case, the 6-dot image).
 
