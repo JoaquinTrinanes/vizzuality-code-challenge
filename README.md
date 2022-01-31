@@ -1,130 +1,119 @@
-# Front-end-code-challenge
+# ✨ Vizzuality front end code challenge ✨
 
-![Legend component which is composed of several items, each one with settings such as a toggle button, an info button and a button to collapse the item](assets/images/legend.png)
+Launching this project is as easy as:
 
+1. 🐑 Clone it
+2. 💿 _Enter_ it (`cd vizzuality-coding-challenge`)
+3. 🤖 `yarn start`
 
-## Instruction for completing and submitting the challenge:
+## The basics
 
-First thing first. This coding challenge is about creating a space for you to share with us how you work and reason, what things you care about when doing coding work, and how you approach problem solving. As such, through this challenge we are not expecting to check if you know the finest algorithms, have all the right answers to a given situation or if you are the best coder in the world. We believe there are no right or wrong answers, so please make yourself comfortable and focus on what you know best.
+The project is created using Create React App, with the TypeScript template and some linting rules for my own sanity. I'm treating the `src/App.tsx` file as a "page" file instead of the application entrypoint.
 
-**Please submit your ideas to us in 1 week (max).** This will give us enough time to review your challenge with the rest of the team before the next interview. During this interview we will take some time to explore together your coding challenge submission, and will ask you any clarifying questions we might have.
+## Fetching the data
 
-Based on previous candidate experiences, we believe **it will take you between 8 and 10 hours to complete the challenge.** 
+The best way to get data is without our UI knowing how to get it. A really simple client is created, which defines the data schema for our TypeScript definitions, and most importantly exports a function that returns a `Promise` with the data. In the project root, `useEffect` is used to fetch the data only on the first render.
 
-## Objective
+This is a really simple approach that can be improved in many ways. For example, creating a hook that handles the errors and loading state (or an existing solution like `useSWR`). The data should be called differently (`fetchData` is a really bad name, but it works in this context because it's the only data we handle).
 
-To complete this code challenge, you will need to set up a simple React-based web application and implement the Legend component from above. In a real world scenario, this component would be attached to a map, and part of a more extensive flow, but for the recruitment purpose, you will focus only this bit.
+Some cool additions would be a `Loading` component to take care of the loading state, instead of doing conditional rendering.
 
-#### DATA
-The sample legend data, located in the `data.json` file, describe the items of the legend component. It should be fetched dynamically (like would you do if it was data from a REST API). You can use directly this url if you want [DATA](https://raw.githubusercontent.com/Vizzuality/front-end-code-challenge/master/data.json)
+```tsx
+{
+  data === null ? <div>Loading</div> : <div>Not loading! :D</div>;
+}
+```
 
-Each legend item has:
-- `id`: a unique identifier
-- `name`: the name of the layer
-- `type`: a type of the item (basic, choropleth or gradient)
-- `items`: an array of objects having name and color values
-- `description`: data to be displayed in a modal
+to:
 
-#### DESIGNS
-Designs are stored in Figma. You should create an account to be able to see them.
+```tsx
+<Loading loading={data === null} fallback={<div>Loading</div>}>
+  Not loading!
+</Loading>
+```
 
-- [Figma - inspect link](https://www.figma.com/file/CcReFFvkqC2FZoCi8yiGhb/Code-Challenge?node-id=0%3A1)
-- [Figma - preview link](https://www.figma.com/proto/CcReFFvkqC2FZoCi8yiGhb/Code-Challenge?node-id=1%3A415&scaling=min-zoom)
+Something similar could be done for collapsibles, a component that always render the 'head' and then conditionally renders and animates the children when it's toggled.
 
+## Legend by legend
 
-Font: [Open Sans](https://fonts.google.com/specimen/Open+Sans)
+### Basic
 
-#### ICONS
-All the icons required are stored in this repo, check `assets/icons`. Feel free to add them as you desire.
+To create the colored circle a `div` is created. It has the background color set to the desired one, and the border radius is set to 50% to make it round.
 
+### Choropleth
 
-## Basic requirements:
-Create 3 different legend item components: basic, choropleth and gradient. Timeline is optional.
+A `div` is created with `flex` display. each cell is full width and has a `div` with the desired color and the corresponding name.
 
-`basic`
+### Gradient
 
-![Basic item which contains a list of values, each associated with a color](assets/images/basic.png)
+Similar to the previous one, but instead of using a solid color a `linear-gradient` from the current color to the next is created. The last element is skipped.
 
-`choropleth`
+There's some extra code to specifically render the last value's name.
 
-![Choropleth item which is composed of a ramp of colours associated with text](assets/images/choropleth.png)
+## Modals
 
-`gradient`
+To create the description modal, I used `react-modal`. I just couldn't be bothered coming up with a solution when a better one already exists 😁
 
-![Gradient item is a gradient between two colours, each extremity with a value](assets/images/gradient.png)
+Because the content is a plain HTML string I do the unthinkable: add it as is to the document!
 
-`timeline` (optional)
-If you are not going to do this layer, please filter it out from the data response.
+```tsx
+<div
+  className="prose mx-auto"
+  dangerouslySetInnerHTML={{
+    __html: DOMPurify.sanitize(legend.description, {
+      USE_PROFILES: { html: true },
+    }),
+  }}
+/>
+```
 
-![Timeline item is an interactive element where the user can select a range between two dates](assets/images/timeline.png)
+This is React's way of telling you that you shouldn't be doing this if you don't know what you're getting into. We do, because the input is sanitized beforehand 😎
 
-Create the toolbar component which contains 3 different buttons, each of them has a tooltip with a short name:
+The `prose` class is a Tailwind utility (`@tailwindcss/typography`) that takes care of formatting the text for us.
 
-`info button`
-  - tooltip short name: "Layer Info"
-  - a click opens a modal that displays the content from the `description` field. Please consider that some of the values are HTML string and they need to be parsed.
-  - expose a function called `onChangeInfo`
+The modal is styled because it would be huge otherwise. The width is set to 75% and the height to 50%. Honestly, I wanted to make this part responsive, but I couldn't find a way to use classes (that is, Tailwind's built in support for responsive design) and I didn't want to use JS to get the screen size. I'm sure there's a way to do it tho. The current compromise is a width that looks good both on computer an mobile, but not as good as it possibly can.
 
-`visibility button`
-  - tooltip short name: "Hide layer" / "Show layer"
-  - a click changes the icon and the tooltip name
-  - expose a function called `onChangeVisibility`
+The modal can be closed pressing escape or clicking outside it, but an **&times;** button is added to improve UX. It's sticky, so it's always visible, even if the modal is scrolled down.
 
-`collapse button`
-  - tooltip short name: "Collapse layer" / "Expand layer"
-  - a click collapses the legend item and shows only the title of the component. It also changes the tooltip name
-  - expose a function called `onChangeCollapse`
+## Tooltips
 
-## Optional goals:
-If you found the basic requirements too easy, you can always try to implement something extra:
+I used a library called `rc-tooltip` and it's default styles to create them. It works as a component that normally renders it's `children`, but when the trigger condition is met (the desired combination of `click` and `hover`, only the latter in this case) is met, the `overlay` prop is rendered.
 
-**1)** The client wants to put a text inside the first layer (see screenshot). Could you add it and make it scalable for future changes?
+## Optional goals
 
-![Gradient item with additional text at the bottom and a link or button](assets/images/additional-text.png)
+### Little excerpt
 
+So the client wants to show some additional data along the legend? No problem! The easiest way to do that and be flexible in the future is for them to send that info with us alongside the other data. Thus, I created an optional `excerpt` property that each legend can provide. i'd use the name `description`, but that one was already taken. The excerpt is rendered the same way as the modal description. To emulate the data is received I hardcoded some text in the fetch function.
 
-**2)** The client wants to be able to sort the layers. As the legend has a handler designed on the left side of each layer item, could you add a functionality of drag and drop to be able to sort the layers? Also, you should expose a function `onChangeOrder` with the new ids sorted.
+### Dragging stuff around
 
+The `@dnd-kit` library provides all the drag and drop functionality we will ever need (for now at least). It even provides a sortable utility in `@dnd-kit/sortable`, which we will use.
 
-**3)** You may notice that there are 4 layers inside the `data.json`. The last one has a timeline config with the following values:
-- `step`: it defines how many steps you should increase each time
-- `speed`: it defines the changing velocity of the step (only if we animate it)
-- `dateFormat`: it defines the format you should show for the dates inside the legend
-- `maxDate`: Max date
-- `minDate`: Min date
+A `Sortable` component is created. This component takes care of creating a `SortableContext` inside a `DndContext`. The `DndContext`handles the logic of what happens when a drag operation completes, how items collide, mouse and touch support... whereas the `SortableContext` keeps track of how the items are ordered.
 
-We think that with these values you should be able to represent this timeline. You can change the `startDate` and `endDate`. Remember to expose a function `onChangeDate` with the new dates defined by the range.
+Each component inside `Sortable` must be enclosed in a `SortableItem` to work. This takes care of the dragging functionality and uses a `SortableListenersContext`. This allows us to make a whole element dragabble but select the handle in an easy way (in this case, the 6-dot image).
 
+```tsx
+const sortableContext = useContext(SortableListenersContext);
 
+return (
+  <div className="flex flex-row gap-x-2 align-middle">
+    <div
+      className="w-3 cursor-grab translate-y-2 touch-manipulation flex-shrink-0"
+      {...sortableContext?.listeners}
+      {...sortableContext?.attributes}
+    >
+      <img src={dragDots} />
+    </div>
+    ...
+  </div>
+);
+```
 
+### Timeline legend
 
+Library time! A slider component is created using `rc-slider`, with our custom styles and exposing the methods and props we're interested in.
 
+The dates are converted to numbers (milliseconds) and those are the values that the range uses internally. They are formatted into dates to make them readable. I used `luxon`, a date utility library, just because I found it to be the easiest way to format a date using a string like `yyyy-MM-dd`. Honestly, I had to cheat a little, because the correct format was `yyyy` instead of `YYYY` so I `toLowercase`'d everything 😅
 
-## Technical requirements
-There are a few rules that we would like you to follow during your code challenge:
-  - Use the React library to demonstrate component-oriented architecture,
-  - Style your components, use an approach that you see fit,
-  - Take care of mobile devices and make sure that your project works on smaller resolution screens,
-  - Work closely with the design, try to implement it as accurately as possible
-
-For sharing purposes please create a **new GitHub repo**, deploy your project to the **GitHub pages** and provide the link to the repo.
-
-Your submission should also include a readme file, where you can document your work, describe the features and the architectural decisions that you made. Feel free to share there your thoughts about the challenges that you faced implementing this code.
-
-
-## What’s next?
-Once you submit your solution, our developers will review your code challenge, taking your experience level into account. The sample code provided by you should be in a state considered as a "production" ready - where each requested element is prepared and potentially ready to review with your colleagues.
-
-Here are a few hints that can help to align your code with the requirements:
-- Does the application realize all the required features?
-- Is anything missing from the specification?
-
-- Is the code clear, maintainable, and easy to understand for other developers? Is it extendable?
-- Is it responsive? Does it scale on mobile devices easily?
-- Does the readme file describes all the features and covers all the information that is essential for the project?
-- Don’t focus only on the “happy path” - have you covered all the edge cases that you faced?
-
-Good luck!
-
-**“The Challenge” has been created with the sole intention of being used as a guiding document for the current recruitment process. This means we won't be using it (all or parts of it) within our projects.**
-
+The component only uses `luxon` internally, because I only needed it for that specific functionality and it made sense to return a normal JS date to work with.
